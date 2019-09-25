@@ -4,6 +4,34 @@
 #include <iconv.h>
 #endif
 
+int code_convert(char *from_charset, char *to_charset, char *inbuf, size_t inlen, char *outbuf, size_t outlen)
+{
+#ifdef _WIN32
+	return 0;  // Windows不需要
+#endif
+
+#ifndef _WIN32
+	int nret = 0;
+	iconv_t cd;
+	char **pin = &inbuf;
+	char **pout = &outbuf;
+
+	cd = iconv_open(to_charset, from_charset);
+	if (cd == 0)
+	{
+		return -1;
+	}
+	memset(outbuf, 0, outlen);
+	if (iconv(cd, pin, &inlen, pout, &outlen) == -1)
+	{
+		nret = -2;
+	}
+	iconv_close(cd);
+	return nret;
+#endif
+}
+
+
 int GBKToUTF8(unsigned char * lpGBKStr, unsigned char * lpUTF8Str, int nUTF8StrLen)
 {
 #ifdef _WIN32	
