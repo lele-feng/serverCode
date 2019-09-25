@@ -126,3 +126,105 @@ char * GetValue(char *src,char *dest ,int num,char ch)
 	return dest;
 }
 
+char * LRemoveValue(char *src, char *dest, int num, char ch, char cp)
+{
+	int nct = 0;
+	bool bfind = false;
+	char *s0 = dest;
+	while ((*src != 0) && (*src != '\n') && (nct < num))
+	{
+		if (*src != ch && *src != ' ')
+		{
+			if (bfind)
+			{
+				++nct;
+			}
+			*s0++ = *src++;
+		}
+		else
+		{
+			bfind = true;
+			src++;
+		}
+	}
+
+	while (nct < num)
+	{
+		*s0++ = cp;
+		++nct;
+	}
+
+	*s0 = 0;
+	return dest;
+}
+
+
+char * ltrim(char *str)
+{
+	char *s = str;
+	while (*s != '\0')
+	{
+		if ((*s != ' ') && (*s != '\t') && (*s != '\n') && (*s != '\r'))
+		{
+			break;
+		}
+		s++;
+	}
+	if (s != str)memmove(str,s,strlen(s)+1);
+	return str;
+}
+
+char * rtrim(char *str)
+{
+	char *s;
+	s = str + strlen(str) -1;
+
+	while ( ((s - str) > 0) &&
+		    (*s == ' ' || *s == '\n' || *s == '\r'))
+	{
+		s--;
+	}
+
+    s++;
+	*s = '\0';
+	return str;
+}
+
+char * alltrim(char *str)
+{
+	ltrim(str);
+	rtrim(str);
+	return str;
+}
+
+void Trim(char *strbuf)
+{
+	if (strbuf == NULL)
+	{
+		return;
+	}
+	if (strbuf[strlen(strbuf)] != '\0')
+	{
+		strbuf[strlen(strbuf)] = '\0';
+	}
+	char *p1 = strbuf;
+	while(*p1 != '\0')
+	{
+		if ((*p1 != ' ') && (*p1 != '\t') && (*p1 != '\n') && (*p1 != '\r'))
+		{
+			break;
+		}
+		p1++;
+	}
+	char *p2 = p1;
+	for (int i = strlen(p1) - 1; i >= 0; i--)
+	{
+		if ((p2[i] != ' ') && (p2[i] != '\t') && (p2[i] != '\r') && (p2[i] != '\n'))
+		{
+			p2[i+1] = '\0';
+			break;
+		}
+	}
+	strncpy(strbuf,p2,strlen(p2)+1);
+	return;
+}
