@@ -76,4 +76,53 @@ int UTF8ToGBK(unsigned char * lpszUtf8, unsigned char *lpszGbk, int nGbkLen)
 #endif
 }
 
+int GetDateString(int ndate, char *szdatestring, int nlen)
+{
+	int year = ndate / 10000;
+	int month = ndate % 10000 / 100;
+	int day = ndate % 10000 % 100;
+
+	sprintf(szdatestring, "%d年%d月%d日", year, month, day);
+
+	return 0;
+}
+
+int GetTimeString(int ntime, char *sztimestring, int nlen)
+{
+	int day = ntime / (60 * 24);
+	int hour = (ntime - day * 60 * 24) / 60;
+	int minute = ntime - day * 60 * 24 - hour * 60;
+
+	sprintf(sztimestring, "%d天%d小时%d分", day, hour, minute);
+
+	return 0;
+}
+
+char * stringtoupper(char *s)
+{
+   register int i;
+
+   if(s) {
+     for(i=((int)strlen(s) - 1); i >= 0; i--)
+       s[i] = toupper(s[i]);
+   }
+
+   return s;
+}
+
+char * GetValue(char *src,char *dest ,int num,char ch)
+{
+	char *s0=dest;
+	dest[0]=0;
+	while (*src!=0 && *src!='\n' && num!=1)
+	{
+		if (*src==ch)
+		  num--;
+		src++;
+	}
+	while (*src!=0 && *src!='\n' && *src!=ch)
+	*s0++=*src++;
+	*s0=0;
+	return dest;
+}
 
