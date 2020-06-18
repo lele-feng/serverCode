@@ -3,7 +3,7 @@
 #include<string.h>
 #include<sys/types.h>
 #include<sys/shm.h>
-#include "Command.h"
+#include "command.h"
 int sharememory(int ipc_size,int flag)
 {
 	int id;

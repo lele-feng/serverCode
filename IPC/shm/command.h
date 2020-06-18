@@ -6,3 +6,4 @@ typedef struct {
 int sharememory(int ipc_size,int flag);
 int create_ipc(int ipc_size);
 int get_ipc(int ipc_size);
+int destroy_sharememory(int id);

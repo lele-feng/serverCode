@@ -4,7 +4,7 @@
 #include<sys/shm.h>
 #include<sys/types.h>
 #include<stdlib.h>
-#include "Command.h"
+#include "command.h"
  
 int main()
 {
